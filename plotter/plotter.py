@@ -4,6 +4,8 @@
 Created on Wed Mar 13 16:34:59 2019
 
 @author: shuichi
+
+ref:https://www.thepoorengineer.com/wp-content/uploads/2018/02/serialGuiPlot.txt
 """
 #!/usr/bin/env python
 
@@ -81,7 +83,7 @@ class serialPlot:
         while (self.isRun):
             self.serialConnection.readinto(self.rawData)
             self.isReceiving = True
-            #print(self.rawData)
+            print(self.rawData)
 
     def close(self):
         self.isRun = False
@@ -108,11 +110,11 @@ class Window(Frame):
         canvas.get_tk_widget().pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
 
 def main():
-    # portName = 'COM5'
-    portName = '/dev/ttyACM0'
+    portName = 'COM5'
+    #portName = '/dev/ttyACM0'
     baudRate = 9600
     maxPlotLength = 100     # number of points in x-axis of real time plot
-    dataNumBytes = 4        # number of bytes of 1 data point
+    dataNumBytes = 2        # number of bytes of 1 data point
     numPlots = 1            # number of plots in 1 graph
     
     s = serialPlot(portName, baudRate, maxPlotLength, dataNumBytes, numPlots)   # initializes all required variables
@@ -123,7 +125,7 @@ def main():
     xmin = 0
     xmax = maxPlotLength
     ymin = -(1)
-    ymax = 1
+    ymax = 1025
     fig = plt.figure(figsize=(10, 8))
     ax = plt.axes(xlim=(xmin, xmax), ylim=(float(ymin - (ymax - ymin) / 10), float(ymax + (ymax - ymin) / 10)))
     ax.set_title('Arduino Accelerometer')
